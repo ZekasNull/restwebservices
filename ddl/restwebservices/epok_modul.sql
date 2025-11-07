@@ -1,15 +1,15 @@
-create table restwebservices.epok_modul
+CREATE TABLE restwebservices.epok_modul
 (
-    Kurskod     varchar(6)   null,
-    Modulkod    int          null,
-    Modulnamn   varchar(255) null,
-    Betygsskala json         null
+    Kurskod     VARCHAR(6)            NOT NULL,
+    Modulkod    INT                   NOT NULL,
+    Modulnamn   VARCHAR(255)          NOT NULL,
+    Betygsskala ENUM ('U', 'G', 'VG') NOT NULL
 );
 
-create index Kurskod
-    on restwebservices.epok_modul (Kurskod);
+CREATE INDEX Kurskod
+    ON restwebservices.epok_modul (Kurskod);
 
-alter table restwebservices.epok_modul
-    add constraint epok_modul_ibfk_1
-        foreign key (Kurskod) references restwebservices.epok_kurs (Kurskod);
+ALTER TABLE restwebservices.epok_modul
+    ADD CONSTRAINT epok_modul_ibfk_1
+        FOREIGN KEY (Kurskod) REFERENCES restwebservices.epok_kurs (Kurskod);
 
