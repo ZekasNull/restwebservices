@@ -114,11 +114,13 @@ public class DatabaseConnector {
 
 		try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
 		{
+			//prepare insert
 			stmt.setString(1, resultat.getPersonnummer());
 			stmt.setString(2, resultat.getKurskod());
 			stmt.setInt(3, resultat.getModulkod());
 			stmt.setDate(4, resultat.getDatum());
 			stmt.setString(5, resultat.getBetyg());
+			//execute
 			stmt.executeUpdate();
 			return true; //only reachable for success in theory
 		} catch (SQLException e)
@@ -135,7 +137,7 @@ public class DatabaseConnector {
 	//region helper methods
 	private void logDatabaseError(SQLException e)
 	{
-		System.out.println("Database returned error code \"" + e.getErrorCode() + "\" and message \"" + e.getMessage() + "\"");
+		System.out.println("[DatabaseConnector] Database returned error code \"" + e.getErrorCode() + "\" and message \"" + e.getMessage() + "\"");
 	}
 	//endregion
 
