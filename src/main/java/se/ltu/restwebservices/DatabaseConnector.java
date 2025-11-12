@@ -1,5 +1,6 @@
-package se.ltu;
+package se.ltu.restwebservices;
 
+import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
 import data_objects.epok.Epok_Modul;
 
@@ -100,6 +101,32 @@ public class DatabaseConnector {
 	}
 
 	//TODO ladok calls (insert studieresultat + some reads?)
+
+	/**
+	 * Försöker lägga till ett Ladok_Resultat-objekt i databasen.
+	 *
+	 * @param resultat det som ska läggas till
+	 * @return True om anropet lyckas, annars false
+	 */
+	public boolean InsertNewLadokResult(Ladok_Resultat resultat)
+	{
+		String query = "INSERT INTO ladok_resultat (Personnummer, Kurskod, Modulkod, Datum, Betyg) VALUES (?, ?, ?, ?, ?)";
+
+		try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
+		{
+			stmt.setString(1, resultat.getPersonnummer());
+			stmt.setString(2, resultat.getKurskod());
+			stmt.setInt(3, resultat.getModulkod());
+			stmt.setDate(4, resultat.getDatum());
+			stmt.setString(5, resultat.getBetyg());
+			stmt.executeUpdate();
+			return true; //only reachable for success in theory
+		} catch (SQLException e)
+		{
+			logDatabaseError(e);
+		}
+		return false;
+	}
 
 	//TODO canvas calls (osäker på exakt vilka calls det blir)
 
