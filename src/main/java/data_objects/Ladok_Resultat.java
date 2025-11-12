@@ -1,6 +1,6 @@
 package data_objects;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Ladok_Resultat {
 	private String personnummer;
