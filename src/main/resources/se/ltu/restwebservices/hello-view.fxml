@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="se.ltu.restwebservices.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="24.0" layoutY="38.0" text="Kurskod" />
+      <ComboBox fx:id="kurskodCombobox" layoutX="24.0" layoutY="55.0" prefHeight="25.0" prefWidth="104.0" />
+      <Label layoutX="159.0" layoutY="38.0" text="Uppgift i Canvas" />
+      <ComboBox fx:id="uppgiftCombobox" layoutX="159.0" layoutY="55.0" prefHeight="25.0" prefWidth="104.0" />
+      <Label layoutX="293.0" layoutY="38.0" text="Modul i Ladok" />
+      <ComboBox fx:id="modulCombobox" layoutX="293.0" layoutY="55.0" prefHeight="25.0" prefWidth="104.0" />
+      <Label layoutX="24.0" layoutY="128.0" text="Namn" />
+      <ComboBox fx:id="namnCombobox" layoutX="24.0" layoutY="145.0" prefWidth="150.0" />
+      <Label layoutX="181.0" layoutY="128.0" text="Omdöme i Canvas" />
+      <Label fx:id="omdömeLabel" layoutX="219.0" layoutY="149.0" text="XXX" />
+      <Label layoutX="309.0" layoutY="128.0" text="Betyg i Ladok" />
+      <ComboBox fx:id="betygCombobox" layoutX="309.0" layoutY="145.0" prefHeight="25.0" prefWidth="76.0" />
+      <Label layoutX="409.0" layoutY="128.0" text="Examinationsdatum" />
+      <TextField fx:id="datumTextfield" layoutX="409.0" layoutY="145.0" prefHeight="25.0" prefWidth="105.0" />
+      <Button fx:id="sparaButton" layoutX="544.0" layoutY="145.0" mnemonicParsing="false" text="Spara" />
+   </children>
+</AnchorPane>
