@@ -1,7 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package data_objects.epok;
 
+/**
+ *
+ * @author vendela
+ */
 public class Epok_Modul {
-	private String kurskod;
+    private String kurskod;
 	private int modulkod;
 	private String modulnamn;
 	private String betygsskala; // ENUM values "U", "G", "VG" defined by database

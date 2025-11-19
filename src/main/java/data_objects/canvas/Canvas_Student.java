@@ -1,7 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package data_objects.canvas;
 
+/**
+ *
+ * @author vendela
+ */
 public class Canvas_Student {
-	private String användare;
+    private String användare;
 	private String namn;
 
 	//constructor
@@ -30,4 +38,5 @@ public class Canvas_Student {
 		this.namn = namn;
 	}
 	//endregion
+    
 }
