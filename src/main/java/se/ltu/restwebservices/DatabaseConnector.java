@@ -1,10 +1,13 @@
-package se.ltu;
+package se.ltu.restwebservices;
 
+import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
+import data_objects.canvas.Canvas_StudentBetygDTO;
 import data_objects.epok.Epok_Modul;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Hanterar anslutning och anrop till databasen.
@@ -101,14 +104,93 @@ public class DatabaseConnector {
 
 	//TODO ladok calls (insert studieresultat + some reads?)
 
-	//TODO canvas calls (osäker på exakt vilka calls det blir)
+	/**
+	 * Försöker lägga till ett Ladok_Resultat-objekt i databasen.
+	 *
+	 * @param resultat det som ska läggas till
+	 * @return True om anropet lyckas, annars false
+	 */
+	public boolean InsertNewLadokResult(Ladok_Resultat resultat)
+	{
+		String query = "INSERT INTO ladok_resultat (Personnummer, Kurskod, Modulkod, Datum, Betyg) VALUES (?, ?, ?, ?, ?)";
+
+		try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
+		{
+			//prepare insert
+			stmt.setString(1, resultat.getPersonnummer());
+			stmt.setString(2, resultat.getKurskod());
+			stmt.setInt(3, resultat.getModulkod());
+			stmt.setDate(4, resultat.getDatum());
+			stmt.setString(5, resultat.getBetyg());
+			//execute
+			stmt.executeUpdate();
+			return true; //only reachable for success in theory
+		} catch (SQLException e)
+		{
+			logDatabaseError(e);
+		}
+		return false;
+	}
+
+
+	//hämtningar från canvas börjar med kurs och modul (=kursuppgift)...
+
+	/**
+	 * Hämtar alla betyg för en given kurskod och uppgift.
+	 *
+	 * @param kurskod     Kurskoden
+	 * @param kursuppgift Kursuppgiftens nummer
+	 * @return En lista av alla betyg formaterade som Data Transfer Objects (DTO).
+	 */
+	public List<Canvas_StudentBetygDTO> getCanvasGrades(String kurskod, int kursuppgift)
+	{
+		List<Canvas_StudentBetygDTO> resultList = new ArrayList<>();
+		String query = """
+				SELECT 
+				    s.Användare,
+				    s.Namn,
+				    k.Kurskod,
+				    k.Kursnamn,
+				    ku.Uppgift_nr,
+				    ku.Uppgiftsnamn,
+				    b.Betyg
+				FROM canvas_betyg b
+				INNER JOIN canvas_student s ON b.Användare = s.Användare
+				INNER JOIN canvas_kursuppgift ku ON b.Uppgift_nr = ku.Uppgift_nr
+				INNER JOIN canvas_kurs k ON ku.Kurskod = k.Kurskod
+				WHERE k.Kurskod = ? AND ku.Uppgift_nr = ?
+				ORDER BY s.Namn
+				""";
+
+		try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
+		{
+			stmt.setString(1, kurskod);
+			stmt.setInt(2, kursuppgift);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next())
+			{
+				resultList.add(new Canvas_StudentBetygDTO(
+						rs.getString("Användare"),
+						rs.getString("Namn"),
+						rs.getString("Kurskod"),
+						rs.getString("Kursnamn"),
+						rs.getInt("Uppgift_nr"),
+						rs.getString("Uppgiftsnamn"),
+						rs.getString("Betyg")));
+			}
+		} catch (SQLException e)
+		{
+			logDatabaseError(e);
+		}
+		return resultList;
+	}
 
 	//endregion
 
 	//region helper methods
 	private void logDatabaseError(SQLException e)
 	{
-		System.out.println("Database returned error code \"" + e.getErrorCode() + "\" and message \"" + e.getMessage() + "\"");
+		System.out.println("[DatabaseConnector] Database returned error code \"" + e.getErrorCode() + "\" and message \"" + e.getMessage() + "\"");
 	}
 	//endregion
 
@@ -117,11 +199,26 @@ public class DatabaseConnector {
 	{
 		DatabaseConnector db = new DatabaseConnector();
 
-		ArrayList<Epok_Modul> list = db.getModulesFromEpok("D0031N");
-		System.out.println("argh " + db.getStudentFromStudentits("abcdef-1").getPersonnummer());
-		for (Epok_Modul m : list)
+		/*
+		Ladok_Resultat resultat = new Ladok_Resultat();
+		// keys
+		resultat.setKurskod("D0666N");
+		resultat.setModulkod(1);
+		resultat.setPersonnummer("136201012468");
+		//details
+		resultat.setDatum(new Date(System.currentTimeMillis()));
+		resultat.setBetyg("G");
+
+		//attempt insert
+		System.out.println(db.InsertNewLadokResult(resultat));
+
+		 */
+
+		List<Canvas_StudentBetygDTO> testlist = db.getCanvasGrades("D0666N", 1);
+
+		for (Canvas_StudentBetygDTO dto : testlist)
 		{
-			System.out.println(m.getModulnamn());
+			System.out.println(dto);
 		}
 
 	}
