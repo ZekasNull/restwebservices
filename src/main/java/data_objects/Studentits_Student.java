@@ -31,4 +31,12 @@ public class Studentits_Student {
 		this.användare = användare;
 	}
 	//endregion
+
+	@Override
+	public String toString()
+	{
+		return "Student{id=" + personnummer + ", name='" + användare + "'}";
+	}
 }
+    
+
