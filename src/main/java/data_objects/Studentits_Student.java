@@ -38,5 +38,5 @@ public class Studentits_Student {
 		return "Student{id=" + personnummer + ", name='" + användare + "'}";
 	}
 }
-    
+
 
