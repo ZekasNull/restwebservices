@@ -1,85 +1,85 @@
-create table canvas_kurs
+CREATE TABLE restwebservices.canvas_kurs
 (
-    Kurskod  varchar(6)   not null
-        primary key,
-    Kursnamn varchar(255) null
+    Kurskod  VARCHAR(6)   NOT NULL
+        PRIMARY KEY,
+    Kursnamn VARCHAR(255) NULL
 );
 
-create table canvas_kursuppgift
+CREATE TABLE restwebservices.canvas_kursuppgift
 (
-    Uppgift_nr   int          not null
-        primary key,
-    Kurskod      varchar(6)   null,
-    Uppgiftsnamn varchar(255) null,
-    constraint canvas_kursuppgift_ibfk_1
-        foreign key (Kurskod) references canvas_kurs (Kurskod)
+    Uppgift_nr   INT          NOT NULL
+        PRIMARY KEY,
+    Kurskod      VARCHAR(6)   NULL,
+    Uppgiftsnamn VARCHAR(255) NULL,
+    CONSTRAINT canvas_kursuppgift_ibfk_1
+        FOREIGN KEY (Kurskod) REFERENCES restwebservices.canvas_kurs (Kurskod)
 );
 
-create index Kurskod
-    on canvas_kursuppgift (Kurskod);
+CREATE INDEX Kurskod
+    ON restwebservices.canvas_kursuppgift (Kurskod);
 
-create table canvas_student
+CREATE TABLE restwebservices.canvas_student
 (
-    Användare varchar(8)   not null
-        primary key,
-    Namn      varchar(255) null
+    Användare VARCHAR(8)   NOT NULL
+        PRIMARY KEY,
+    Namn      VARCHAR(255) NULL
 );
 
-create table canvas_betyg
+CREATE TABLE restwebservices.canvas_betyg
 (
-    betygID    int        not null
-        primary key,
-    Uppgift_nr int        null,
-    Användare  varchar(8) null,
-    Betyg      varchar(2) null,
-    constraint canvas_betyg_ibfk_1
-        foreign key (Uppgift_nr) references canvas_kursuppgift (Uppgift_nr),
-    constraint canvas_betyg_ibfk_2
-        foreign key (Användare) references canvas_student (Användare)
+    betygID    INT        NOT NULL
+        PRIMARY KEY,
+    Uppgift_nr INT        NULL,
+    Användare  VARCHAR(8) NULL,
+    Betyg      VARCHAR(2) NULL,
+    CONSTRAINT canvas_betyg_ibfk_1
+        FOREIGN KEY (Uppgift_nr) REFERENCES restwebservices.canvas_kursuppgift (Uppgift_nr),
+    CONSTRAINT canvas_betyg_ibfk_2
+        FOREIGN KEY (Användare) REFERENCES restwebservices.canvas_student (Användare)
 );
 
-create index Användare
-    on canvas_betyg (Användare);
+CREATE INDEX Användare
+    ON restwebservices.canvas_betyg (Användare);
 
-create index Uppgift_nr
-    on canvas_betyg (Uppgift_nr);
+CREATE INDEX Uppgift_nr
+    ON restwebservices.canvas_betyg (Uppgift_nr);
 
-create table epok_kurs
+CREATE TABLE restwebservices.epok_kurs
 (
-    Kurskod varchar(6) not null
-        primary key
+    Kurskod VARCHAR(6) NOT NULL
+        PRIMARY KEY
 );
 
-create table epok_modul
+CREATE TABLE restwebservices.epok_modul
 (
-    Kurskod     varchar(6)   null,
-    Modulkod    int          null,
-    Modulnamn   varchar(255) null,
-    Betygsskala json         null,
-    constraint epok_modul_ibfk_1
-        foreign key (Kurskod) references epok_kurs (Kurskod)
+    Kurskod     VARCHAR(6)            NOT NULL,
+    Modulkod    INT                   NOT NULL,
+    Modulnamn   VARCHAR(255)          NOT NULL,
+    Betygsskala ENUM ('U', 'G', 'VG') NOT NULL,
+    CONSTRAINT epok_modul_ibfk_1
+        FOREIGN KEY (Kurskod) REFERENCES restwebservices.epok_kurs (Kurskod)
 );
 
-create index Kurskod
-    on epok_modul (Kurskod);
+CREATE INDEX Kurskod
+    ON restwebservices.epok_modul (Kurskod);
 
-create table ladok_resultat
+CREATE TABLE restwebservices.ladok_resultat
 (
-    Personnummer varchar(12) not null,
-    Kurskod      varchar(6)  not null,
-    Modulkod     int         not null,
-    Datum        date        null,
-    Betyg        varchar(2)  null,
-    primary key (Personnummer, Kurskod, Modulkod)
+    Personnummer VARCHAR(12) NOT NULL,
+    Kurskod      VARCHAR(6)  NOT NULL,
+    Modulkod     INT         NOT NULL,
+    Datum        DATE        NULL,
+    Betyg        VARCHAR(2)  NULL,
+    PRIMARY KEY (Personnummer, Kurskod, Modulkod)
 );
 
-create table studentits_student
+CREATE TABLE restwebservices.studentits_student
 (
-    Personnummer varchar(12) not null
-        primary key,
-    Användare    varchar(8)  null
+    Personnummer VARCHAR(12) NOT NULL
+        PRIMARY KEY,
+    Användare    VARCHAR(8)  NULL
 );
 
-create index AK
-    on studentits_student (Användare);
+CREATE INDEX AK
+    ON restwebservices.studentits_student (Användare);
 
