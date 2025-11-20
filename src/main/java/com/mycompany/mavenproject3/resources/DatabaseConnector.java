@@ -1,4 +1,4 @@
-package se.ltu.restwebservices;
+package com.mycompany.mavenproject3.resources;
 
 import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class DatabaseConnector {
 	//Anslutningsdetaljer - måste ändras om något annat användas lokalt.
-	private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/restwebservices";
+	private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/restwebservices?useSSL=false&serverTimezone=UTC";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "root";
 
@@ -26,6 +26,14 @@ public class DatabaseConnector {
 	 */
 	public static Connection getConnection() throws SQLException
 	{
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+
 		return DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
 	}
 
