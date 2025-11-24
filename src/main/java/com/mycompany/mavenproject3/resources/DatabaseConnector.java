@@ -3,6 +3,7 @@ package com.mycompany.mavenproject3.resources;
 import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
 import data_objects.canvas.Canvas_StudentBetygDTO;
+import data_objects.epok.Epok_Kurs;
 import data_objects.epok.Epok_Modul;
 
 import java.sql.*;
@@ -140,8 +141,39 @@ public class DatabaseConnector {
 		return false;
 	}
 
+    /**
+     * Hämtar alla kurskoder från epok
+     *
+     */
+    public static ArrayList<String> getKurskodFromEpok()
+    {
+        //variabler
+        String query = "SELECT * FROM epok_kurs";
+        ArrayList<String> kurskoder = new ArrayList<>();
 
-	//hämtningar från canvas börjar med kurs och modul (=kursuppgift)...
+        //db call
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
+        {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                kurskoder.add(new String
+                        (
+                                rs.getString("Kurskod")
+                        ));
+            }
+
+        } catch (SQLException e)
+        {
+            logDatabaseError(e);
+        }
+
+        return kurskoder;
+    }
+
+
+    //hämtningar från canvas börjar med kurs och modul (=kursuppgift)...
 
 	/**
 	 * Hämtar alla betyg för en given kurskod och uppgift.
@@ -196,7 +228,7 @@ public class DatabaseConnector {
 	//endregion
 
 	//region helper methods
-	private void logDatabaseError(SQLException e)
+	private static void logDatabaseError(SQLException e)
 	{
 		System.out.println("[DatabaseConnector] Database returned error code \"" + e.getErrorCode() + "\" and message \"" + e.getMessage() + "\"");
 	}
