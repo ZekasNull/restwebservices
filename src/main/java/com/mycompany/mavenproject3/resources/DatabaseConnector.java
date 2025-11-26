@@ -2,6 +2,8 @@ package com.mycompany.mavenproject3.resources;
 
 import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
+import data_objects.canvas.Canvas_Kurs;
+import data_objects.canvas.Canvas_Kursuppgift;
 import data_objects.canvas.Canvas_StudentBetygDTO;
 import data_objects.epok.Epok_Kurs;
 import data_objects.epok.Epok_Modul;
@@ -170,6 +172,40 @@ public class DatabaseConnector {
         }
 
         return kurskoder;
+    }
+
+    /**
+     * Hämtar alla kursuppgifter från Canvas
+     *
+     */
+    public static ArrayList<Canvas_Kursuppgift> getKursuppgifterFromCanvas(String kurskod)
+    {
+        //variabler
+        String query = "SELECT * FROM canvas_kursuppgift WHERE kurskod = ?";
+        ArrayList<Canvas_Kursuppgift> kursuppgifter = new ArrayList<>();
+
+        //db call
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
+        {
+            stmt.setString(1, kurskod);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                kursuppgifter.add(new Canvas_Kursuppgift
+                        (
+                                rs.getInt("Uppgift_nr"),
+                                kurskod,
+                                rs.getString("Uppgiftsnamn")
+                        ));
+            }
+
+        } catch (SQLException e)
+        {
+            logDatabaseError(e);
+        }
+
+        return kursuppgifter;
     }
 
 

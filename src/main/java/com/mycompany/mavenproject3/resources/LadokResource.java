@@ -13,13 +13,13 @@ public class LadokResource {
 	// man skickar i form av denna mall via java
 	// {"personnummer": "293103011239", "kurskod": "M1111A", "modulkod": 5, "datum": "2025-11-15", "betyg": "VG"}
 
-	private final DatabaseConnector db = new DatabaseConnector();
+	private final static DatabaseConnector db = new DatabaseConnector();
 
 	@POST
 	@Path("regResultat")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response registerResult(Ladok_Resultat resultat)
+	public static Response registerResult(Ladok_Resultat resultat)
 	{
 
 		boolean success = db.InsertNewLadokResult(resultat);

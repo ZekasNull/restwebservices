@@ -16,13 +16,13 @@ import java.util.ArrayList;
 @Path("epok")
 public class EpokResource {
 
-	private final DatabaseConnector db = new DatabaseConnector();
+	private final static DatabaseConnector db = new DatabaseConnector();
 
 	// skriv typ /resources/epok/moduler?kurskod=1
 	@GET
 	@Path("moduler")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Epok_Modul> getModul(@QueryParam("kurskod") String kurskod)
+	public static ArrayList<Epok_Modul> getModul(@QueryParam("kurskod") String kurskod)
 	{
 
 		if (kurskod == null || kurskod.isEmpty())

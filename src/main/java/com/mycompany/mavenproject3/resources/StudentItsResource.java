@@ -14,13 +14,13 @@ import jakarta.ws.rs.core.MediaType;
 @Path("studentIts")
 public class StudentItsResource {
 
-	private final DatabaseConnector db = new DatabaseConnector();
+	private final static DatabaseConnector db = new DatabaseConnector();
 
 	// /resources/studentIts/student?Användare=xxxx
 	@GET
 	@Path("student")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Studentits_Student getStudent(@QueryParam("Användare") String användarnamn)
+	public static Studentits_Student getStudent(@QueryParam("Användare") String användarnamn)
 	{
 
 		if (användarnamn == null || användarnamn.isEmpty())
