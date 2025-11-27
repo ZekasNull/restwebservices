@@ -9,4 +9,6 @@ module se.ltu.restwebservices {
 
     opens se.ltu.restwebservices to javafx.fxml;
 	exports se.ltu.restwebservices;
+	exports client;
+	opens client to javafx.fxml;
 }

@@ -1,16 +1,16 @@
-package com.mycompany.mavenproject3.resources;
+package database;
 
 import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
-import data_objects.canvas.Canvas_Kurs;
 import data_objects.canvas.Canvas_Kursuppgift;
 import data_objects.canvas.Canvas_StudentBetygDTO;
-import data_objects.epok.Epok_Kurs;
 import data_objects.epok.Epok_Modul;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Hanterar anslutning och anrop till databasen.
@@ -20,6 +20,7 @@ public class DatabaseConnector {
 	private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/restwebservices?useSSL=false&serverTimezone=UTC";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "root";
+	private static final Logger LOG = Logger.getLogger(DatabaseConnector.class.getName());
 
 	/**
 	 * Öppnar en anslutning till databasen.

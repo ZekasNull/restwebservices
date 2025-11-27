@@ -1,6 +1,7 @@
-package com.mycompany.mavenproject3.resources;
+package webservices;
 
 import data_objects.canvas.Canvas_StudentBetygDTO;
+import database.DatabaseConnector;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
