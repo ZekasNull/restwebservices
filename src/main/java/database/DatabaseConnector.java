@@ -147,7 +147,7 @@ public class DatabaseConnector {
     /**
      * Hämtar alla kurskoder från epok
      */
-    public static ArrayList<String> getKurskodFromEpok()
+    public ArrayList<String> getKurskodFromEpok()
     {
         //variabler
         String query = "SELECT * FROM epok_kurs";
@@ -177,7 +177,7 @@ public class DatabaseConnector {
     /**
      * Hämtar alla kursuppgifter från Canvas
      */
-    public static ArrayList<Canvas_Kursuppgift> getKursuppgifterFromCanvas(String kurskod)
+    public ArrayList<Canvas_Kursuppgift> getKursuppgifterFromCanvas(String kurskod)
     {
         //variabler
         String query = "SELECT * FROM canvas_kursuppgift WHERE kurskod = ?";
