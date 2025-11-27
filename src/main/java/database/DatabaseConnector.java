@@ -2,7 +2,9 @@ package database;
 
 import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
+import data_objects.canvas.Canvas_Betyg;
 import data_objects.canvas.Canvas_Kursuppgift;
+import data_objects.canvas.Canvas_Student;
 import data_objects.canvas.Canvas_StudentBetygDTO;
 import data_objects.epok.Epok_Modul;
 
@@ -253,6 +255,52 @@ public class DatabaseConnector {
             logDatabaseError(e);
         }
         return resultList;
+    }
+
+    public List<Canvas_Student> getCanvasStudents()
+    {
+        String query = "SELECT * FROM canvas_student";
+        List<Canvas_Student> students = new ArrayList<>();
+
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
+        {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                Canvas_Student student = new Canvas_Student();
+                student.setAnvändare(rs.getString("Användare"));
+                student.setNamn(rs.getString("Namn"));
+                students.add(student);
+            }
+        } catch (SQLException e)
+        {
+            logDatabaseError(e);
+        }
+        return students;
+    }
+
+    public Canvas_Betyg getCanvasGrade(String användare, int uppgift_nr)
+    {
+        String query = "SELECT * FROM canvas_betyg WHERE Uppgift_nr = ? AND Användare = ?";
+        Canvas_Betyg betyg = new Canvas_Betyg();
+
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query))
+        {
+            stmt.setInt(1, uppgift_nr);
+            stmt.setString(2, användare);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                betyg.setBetyg(rs.getString("Betyg"));
+                betyg.setAnvändare(användare);
+                betyg.setUppgiftNr(uppgift_nr);
+            }
+        } catch (SQLException e)
+        {
+            logDatabaseError(e);
+        }
+        return betyg;
     }
 
     //endregion
