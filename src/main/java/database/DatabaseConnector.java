@@ -54,7 +54,7 @@ public class DatabaseConnector {
      * @param kurskod Kurskoden för den kurs vars moduler söks
      * @return en ArrayList av kursens moduler (kan vara tom)
      */
-    public ArrayList<Epok_Modul> getModulesFromEpok(String kurskod)
+    public List<Epok_Modul> getModulesFromEpok(String kurskod)
     {
         //variabler
         String query = "SELECT * FROM epok_modul WHERE kurskod = ?";

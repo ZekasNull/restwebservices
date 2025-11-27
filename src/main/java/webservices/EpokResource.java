@@ -9,6 +9,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("epok")
 public class EpokResource {
@@ -19,7 +20,7 @@ public class EpokResource {
 	@GET
 	@Path("moduler")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static ArrayList<Epok_Modul> getModul(@QueryParam("kurskod") String kurskod)
+	public List<Epok_Modul> getModul(@QueryParam("kurskod") String kurskod)
 	{
 
 		if (kurskod == null || kurskod.isEmpty())

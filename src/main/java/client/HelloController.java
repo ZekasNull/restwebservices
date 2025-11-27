@@ -7,6 +7,9 @@ import data_objects.Studentits_Student;
 import data_objects.canvas.Canvas_Kursuppgift;
 import data_objects.canvas.Canvas_StudentBetygDTO;
 import data_objects.epok.Epok_Modul;
+
+import database.DatabaseResponse;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -39,7 +42,7 @@ public class HelloController {
     //variabler
     ObservableList<String> kurskoder = FXCollections.observableArrayList();
     ArrayList<Canvas_Kursuppgift> kursuppgifter = new ArrayList<>();
-    ArrayList<Epok_Modul> moduler = new ArrayList<>();
+    List<Epok_Modul> moduler = new ArrayList<>();
     List<Canvas_StudentBetygDTO> studentbetyg = new ArrayList<>();
     int valdModul = -1;
     Studentits_Student student = new Studentits_Student();
@@ -107,16 +110,20 @@ public class HelloController {
         boolean result;
         //När knappen trycks ska ett resultat byggas och sedan skickas till nätverkstjänsten
         Ladok_Resultat resultat = prepareLadokResult();
-        result = ns.sendLadokResultat(resultat, namnCombobox.getValue().getAnvändare());
+        DatabaseResponse dr = ns.sendLadokResultat(resultat, namnCombobox.getValue().getAnvändare());
         //egentligen r.getStatus() == 200
-        if (result)
+        if (dr.isSuccess())
         {
             resultatLabel.setText("Lyckades");
+        } else if (dr.getErrorCode() == 1062)
+        {
+            resultatLabel.setText("Misslyckades");
+            showErrorPopup("Nekad: Studenten har redan ett registrerat resultat för den uppgiften.");
         } else
         {
             resultatLabel.setText("Misslyckades");
+            showErrorPopup(dr.toString());
         }
-        return; //FIXME handle response
     }
 
     /**
