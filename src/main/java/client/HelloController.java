@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import webservices.EpokResource;
-
 public class HelloController {
     private final static Logger LOG = Logger.getLogger(HelloController.class.getName());
     @FXML
@@ -176,7 +174,7 @@ public class HelloController {
         betygCombobox.getItems().add("U");
         betygCombobox.getItems().add("G");
         String valdUppgift = uppgiftCombobox.getValue().getUppgiftsnamn();
-        moduler = EpokResource.getModul(kurskodCombobox.getValue());
+        moduler = ns.getModulFromEpok(kurskodCombobox.getValue());
         for (Epok_Modul epokModul : moduler)
         {
             if (epokModul.getModulnamn().equals(valdUppgift) && epokModul.getKurskod().equals(kurskodCombobox.getValue())

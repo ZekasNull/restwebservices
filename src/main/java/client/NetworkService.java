@@ -3,6 +3,7 @@ package client;
 import data_objects.Ladok_Resultat;
 import data_objects.Studentits_Student;
 import data_objects.canvas.*;
+import data_objects.epok.Epok_Modul;
 import database.DatabaseConnector;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -91,6 +92,15 @@ public class NetworkService {
     {
         //TODO the same as before
         return db.getKursuppgifterFromCanvas(kurskod);
+    }
+
+    /**
+     * @param kurskod
+     * @return
+     */
+    public List<Epok_Modul> getModulFromEpok(String kurskod)
+    {
+        return db.getModulesFromEpok(kurskod);
     }
 
 
