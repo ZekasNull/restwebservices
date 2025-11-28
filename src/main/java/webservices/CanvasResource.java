@@ -1,5 +1,6 @@
 package webservices;
 
+import data_objects.canvas.Canvas_Betyg;
 import data_objects.canvas.Canvas_Kursuppgift;
 import data_objects.canvas.Canvas_Student;
 import data_objects.canvas.Canvas_StudentBetygDTO;
@@ -26,6 +27,17 @@ public class CanvasResource {
 	{
 
 		return db.getCanvasGrades(kurskod, uppgift);
+	}
+
+	@GET
+	@Path("betyg/{user}/{uppgift}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Canvas_Betyg getUserGrades(
+			@PathParam("user") String användare,
+			@PathParam("uppgift") int uppgift
+	)
+	{
+		return db.getCanvasGrade(användare, uppgift);
 	}
 
 	@GET
