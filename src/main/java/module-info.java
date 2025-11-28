@@ -9,6 +9,7 @@ module se.ltu.restwebservices {
 
     exports se.ltu.restwebservices to javafx.graphics;
     exports data_objects.canvas;
+    exports data_objects;
     exports client to javafx.fxml;
 	opens client to javafx.fxml;
 }
