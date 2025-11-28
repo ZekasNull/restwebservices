@@ -30,4 +30,12 @@ public class EpokResource {
 
 		return db.getModulesFromEpok(kurskod);
 	}
+
+	@GET
+	@Path("kurser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getAllKurser()
+	{
+		return db.getKurskodFromEpok();
+	}
 }
