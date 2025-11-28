@@ -145,8 +145,8 @@ public class HelloController {
         SimpleDateFormat datumFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDatum = datumFormat.parse(datumTextfield.getText());
         java.sql.Date sqlDatum = new java.sql.Date(utilDatum.getTime());
-        resultat.setDatum(sqlDatum);
-
+        resultat.setSqlDatum(sqlDatum);
+        LOG.info("sqldatum is " + sqlDatum);
         return resultat;
     }
 

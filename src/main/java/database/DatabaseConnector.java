@@ -132,7 +132,7 @@ public class DatabaseConnector {
             stmt.setString(1, resultat.getPersonnummer());
             stmt.setString(2, resultat.getKurskod());
             stmt.setInt(3, resultat.getModulkod());
-            stmt.setDate(4, resultat.getDatum());
+            stmt.setString(4, resultat.getDate());
             stmt.setString(5, resultat.getBetyg());
             //execute
             stmt.executeUpdate();
