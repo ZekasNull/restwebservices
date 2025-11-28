@@ -1,13 +1,18 @@
 package data_objects;
 
+import jakarta.json.bind.annotation.JsonbDateFormat;
+
 import java.sql.Date;
 
 public class Ladok_Resultat {
 	private String personnummer;
 	private String kurskod;
 	private int modulkod;
-	private Date datum;
+	@JsonbDateFormat("yyyy-MM-dd")
+	private Date sqlDatum;
+	private String date;
 	private String betyg;
+
 
 	//region Getters and Setters
 	public String getPersonnummer()
@@ -40,14 +45,15 @@ public class Ladok_Resultat {
 		this.modulkod = modulkod;
 	}
 
-	public Date getDatum()
+	public String getDate()
 	{
-		return datum;
+		return this.date;
 	}
 
-	public void setDatum(Date datum)
+	public void setSqlDatum(Date sqlDatum)
 	{
-		this.datum = datum;
+		this.sqlDatum = sqlDatum;
+		this.date = sqlDatum.toString();
 	}
 
 	public String getBetyg()
