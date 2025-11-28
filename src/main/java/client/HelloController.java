@@ -105,22 +105,24 @@ public class HelloController {
     @FXML
     protected void sparaButtonPressed() throws ParseException
     {
-        boolean result;
+        boolean result; //temporär
         //När knappen trycks ska ett resultat byggas och sedan skickas till nätverkstjänsten
         Ladok_Resultat resultat = prepareLadokResult();
-        DatabaseResponse dr = ns.sendLadokResultat(resultat, namnCombobox.getValue().getAnvändare());
-        //egentligen r.getStatus() == 200
-        if (dr.isSuccess())
+        result = ns.sendLadokResultat(resultat, namnCombobox.getValue().getAnvändare());
+        // DatabaseResponse dr = ns.sendLadokResultat(resultat, namnCombobox.getValue().getAnvändare());
+        if (result) //if dr.issuccess()
         {
             resultatLabel.setText("Lyckades");
-        } else if (dr.getErrorCode() == 1062)
+        }
+//        else if (dr.getErrorCode() == 1062)
+//        {
+//            resultatLabel.setText("Misslyckades");
+//            showErrorPopup("Nekad: Studenten har redan ett registrerat resultat för den uppgiften.");
+//        }
+        else
         {
             resultatLabel.setText("Misslyckades");
-            showErrorPopup("Nekad: Studenten har redan ett registrerat resultat för den uppgiften.");
-        } else
-        {
-            resultatLabel.setText("Misslyckades");
-            showErrorPopup(dr.toString());
+            //showErrorPopup(dr.toString());
         }
     }
 

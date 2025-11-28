@@ -27,9 +27,9 @@ public class LadokResource {
 	public static Response registerResult(Ladok_Resultat resultat)
 	{
 
-		boolean success = db.InsertNewLadokResult(resultat);
+		DatabaseResponse reply = db.InsertNewLadokResult(resultat);
 
-		if (success)
+		if (reply.isSuccess())
 		{
 			return Response.ok("registrerad").build();
 		} else
