@@ -10,6 +10,13 @@ public class Canvas_Kursuppgift {
 	{
 	}
 
+    public Canvas_Kursuppgift(int uppgiftNr, String kurskod, String uppgiftsnamn)
+    {
+        this.uppgiftNr = uppgiftNr;
+        this.kurskod = kurskod;
+        this.uppgiftsnamn = uppgiftsnamn;
+    }
+
 	//region Getters and Setters
 	public int getUppgiftNr()
 	{
