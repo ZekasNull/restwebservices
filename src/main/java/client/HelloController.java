@@ -8,8 +8,6 @@ import data_objects.canvas.Canvas_Kursuppgift;
 import data_objects.canvas.Canvas_StudentBetygDTO;
 import data_objects.epok.Epok_Modul;
 
-import database.DatabaseResponse;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -52,7 +50,7 @@ public class HelloController {
     /**
      * Initialiserar klassen. Följande sker:
      * Nätverkstjänst skapas
-     * Alla kurskoder läses in från EPoK (borde väl egentligen vara Canvas men sak samma)
+     * Alla kurskoder läses in från EPoK
      * Cellfabrik för lista och knapp sätts för uppgifter.
      * Ovanstående för namncombobox.
      */
