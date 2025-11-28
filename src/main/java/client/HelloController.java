@@ -170,6 +170,7 @@ public class HelloController {
     {
         namnCombobox.getItems().clear();
         betygCombobox.getItems().clear();
+        if (kurskodCombobox.getValue() == null) return;
 
         //fyller comboboxen med betyg som är tillgängliga för vald uppgift
         //U och G finns för alla, sen görs en kontroll ifall uppgiftens betygsskala är VG så läggs det till också
@@ -208,6 +209,7 @@ public class HelloController {
     @FXML
     protected void namnComboboxAction()
     {
+        if (namnCombobox.getSelectionModel().getSelectedItem() == null) return;
         //skriver ut betyg som är satt i Canvas
         Canvas_Student student = namnCombobox.getSelectionModel().getSelectedItem();
         int uppgiftnr = uppgiftCombobox.getValue().getUppgiftNr();
