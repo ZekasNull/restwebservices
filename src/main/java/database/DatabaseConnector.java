@@ -184,6 +184,7 @@ public class DatabaseConnector {
      */
     public ArrayList<Canvas_Kursuppgift> getKursuppgifterFromCanvas(String kurskod)
     {
+        LOG.info("getKursuppgifterFromCanvas() called");
         //variabler
         String query = "SELECT * FROM canvas_kursuppgift WHERE kurskod = ?";
         ArrayList<Canvas_Kursuppgift> kursuppgifter = new ArrayList<>();
@@ -208,7 +209,7 @@ public class DatabaseConnector {
         {
             logDatabaseError(e);
         }
-
+        LOG.info("returning list of length " + kursuppgifter.size());
         return kursuppgifter;
     }
 
