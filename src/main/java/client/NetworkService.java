@@ -52,90 +52,71 @@ public class NetworkService {
     // --- EXEMPEL: Skicka resultat till Ladok (POST) ---
     public boolean sendLadokResultat(Ladok_Resultat resultat, String studentanvändare)
     {
-        try
-        {
-            // 1) hämta student från StudentITS
-            Studentits_Student student = api
-                    .path("studentits")
-                    .path("students")
-                    .path(studentanvändare)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(Studentits_Student.class);
+        // 1) hämta student från StudentITS
+        Studentits_Student student = api
+                .path("studentits")
+                .path("students")
+                .path(studentanvändare)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Studentits_Student.class);
 
-            if (student == null || student.getPersonnummer() == null)
-            {
-                return false;
-            }
-
-            resultat.setPersonnummer(student.getPersonnummer());
-
-            // 2) skicka resultatet vidare till Ladok
-            Response response = api
-                    .path("ladok")
-                    .path("regresultat")
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .post(Entity.entity(resultat, MediaType.APPLICATION_JSON_TYPE));
-
-            boolean ok = response.getStatus() >= 200 && response.getStatus() < 300;
-            response.close();
-            return ok;
-
-        } catch (Exception e)
+        if (student == null || student.getPersonnummer() == null)
         {
             return false;
         }
+
+        resultat.setPersonnummer(student.getPersonnummer());
+
+        // 2) skicka resultatet vidare till Ladok
+        Response response = api
+                .path("ladok")
+                .path("regresultat")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(resultat, MediaType.APPLICATION_JSON_TYPE));
+
+        boolean ok = response.getStatus() >= 200 && response.getStatus() < 300;
+        response.close();
+        return ok;
     }
 
     // --- EXEMPEL: Hämta Canvas-betyg (GET) ---
     public List<Canvas_StudentBetygDTO> getStudentsAndGrades(String kurskod, int kursuppgift)
     {
-        try
-        {
-            return api.path("canvas")
-                    .path("betyg")
-                    .queryParam("kurskod", kurskod)
-                    .queryParam("uppgiftNr", kursuppgift)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(new GenericType<List<Canvas_StudentBetygDTO>>() {
-                    });
-        } catch (Exception e)
-        {
-            return List.of();
-        }
+
+        return api.path("canvas")
+                .path("betyg")
+                .queryParam("kurskod", kurskod)
+                .queryParam("uppgiftNr", kursuppgift)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(new GenericType<List<Canvas_StudentBetygDTO>>() {
+                });
+
     }
 
     //FIXME egentligen studerar inte alla studenter alla kurser
     // --- EXEMPEL: Hämta Canvas-studenter (GET) ---
     public List<Canvas_Student> getCanvasStudents()
     {
-        try
-        {
-            return api.path("canvas")
-                    .path("studenter")
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(new GenericType<List<Canvas_Student>>() {
-                    });
-        } catch (Exception e)
-        {
-            return List.of();
-        }
+
+        return api.path("canvas")
+                .path("studenter")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(new GenericType<List<Canvas_Student>>() {
+                });
+
     }
 
     // --- EXEMPEL: Hämta en students betyg (GET) ---
     public Canvas_Betyg getCanvasGrade(String användare, int uppgift_nr)
     {
-        try
-        {
-            return api.path("canvas")
-                    .path("betyg")
-                    .path(användare)
-                    .path(String.valueOf(uppgift_nr))
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(Canvas_Betyg.class);
-        } catch (Exception e)
-        {
-            return null;
-        }
+
+        return api.path("canvas")
+                .path("betyg")
+                .path(användare)
+                .path(String.valueOf(uppgift_nr))
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Canvas_Betyg.class);
+
     }
 
     // --- EXEMPEL: Hämta kurskoder (GET) ---
@@ -143,32 +124,31 @@ public class NetworkService {
     {
         try
         {
-            return api.path("epok")
-                    .path("kurser")
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(new GenericType<List<String>>() {
-                    });
+            return
+                    api.path("epok")
+                            .path("kurser")
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .get(new GenericType<List<String>>() {
+                            });
         } catch (Exception e)
         {
-            return List.of();
+            LOG.log(Level.SEVERE, "getAllKurskod() failed");
+            throw e;
         }
     }
 
     // --- EXEMPEL: Hämta kursuppgifter (GET) ---
     public List<Canvas_Kursuppgift> getAllKursuppgift(String kurskod)
     {
-        try
-        {
-            return api.path("canvas")
-                    .path("kursuppgifter")
-                    .queryParam("kurskod", kurskod)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(new GenericType<List<Canvas_Kursuppgift>>() {
-                    });
-        } catch (Exception e)
-        {
-            return List.of();
-        }
+        LOG.info("getAllKursuppgift() called");
+
+        return api.path("canvas")
+                .path("kursuppgifter")
+                .queryParam("kurskod", kurskod)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(new GenericType<List<Canvas_Kursuppgift>>() {
+                });
+
     }
 
     /**
