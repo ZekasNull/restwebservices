@@ -43,7 +43,8 @@ public class CanvasResource {
 	@GET
 	@Path("kursuppgifter")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Canvas_Kursuppgift> getKursuppgifterFromCanvas(String kurskod)
+	public List<Canvas_Kursuppgift> getKursuppgifterFromCanvas(
+			@QueryParam("kurskod") String kurskod)
 	{
 		LOG.info("getKursuppgifterFromCanvas() called");
 		return db.getKursuppgifterFromCanvas(kurskod);
