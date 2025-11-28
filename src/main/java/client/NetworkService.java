@@ -5,6 +5,7 @@ import data_objects.Studentits_Student;
 import data_objects.canvas.*;
 import data_objects.epok.Epok_Modul;
 import database.DatabaseConnector;
+import database.DatabaseResponse;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -44,7 +45,7 @@ public class NetworkService {
      * @return True om det lyckades, annars false
      * //FIXME should return Response
      */
-    public boolean sendLadokResultat(Ladok_Resultat resultat, String studentanvändare)
+    public DatabaseResponse sendLadokResultat(Ladok_Resultat resultat, String studentanvändare)
     {
         Studentits_Student student = db.getStudentFromStudentits(studentanvändare);
         resultat.setPersonnummer(student.getPersonnummer());

@@ -122,7 +122,7 @@ public class DatabaseConnector {
      * @param resultat det som ska läggas till
      * @return True om anropet lyckas, annars false
      */
-    public boolean InsertNewLadokResult(Ladok_Resultat resultat)
+    public DatabaseResponse InsertNewLadokResult(Ladok_Resultat resultat)
     {
         String query = "INSERT INTO ladok_resultat (Personnummer, Kurskod, Modulkod, Datum, Betyg) VALUES (?, ?, ?, ?, ?)";
 
@@ -136,12 +136,14 @@ public class DatabaseConnector {
             stmt.setString(5, resultat.getBetyg());
             //execute
             stmt.executeUpdate();
-            return true; //only reachable for success in theory
+            return new DatabaseResponse(true); //only reachable for success in theory
         } catch (SQLException e)
         {
             logDatabaseError(e);
+            DatabaseResponse response = new DatabaseResponse(false);
+            response.setError(e);
+            return response;
         }
-        return false;
     }
 
     /**
@@ -308,9 +310,9 @@ public class DatabaseConnector {
     //region helper methods
     private static void logDatabaseError(SQLException e)
     {
-        System.out.println("[DatabaseConnector] Database returned error code \"" + e.getErrorCode() + "\" and message \"" + e.getMessage() + "\"");
+        String error = "[DatabaseConnector] Database returned error code \"" + e.getErrorCode() + "\" and message \"" + e.getMessage() + "\"";
+        LOG.log(Level.WARNING, error);
     }
     //endregion
-
 
 }
