@@ -3,10 +3,7 @@ package webservices;
 import data_objects.Ladok_Resultat;
 import database.DatabaseConnector;
 import database.DatabaseResponse;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -23,8 +20,7 @@ public class LadokResource {
 	@POST
 	@Path("regResultat")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public static Response registerResult(Ladok_Resultat resultat)
+	public Response registerResult(Ladok_Resultat resultat)
 	{
 
 		DatabaseResponse reply = db.InsertNewLadokResult(resultat);
