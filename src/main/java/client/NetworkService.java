@@ -57,11 +57,12 @@ public class NetworkService {
     // --- EXEMPEL: Skicka resultat till Ladok (POST) ---
     public boolean sendLadokResultat(Ladok_Resultat resultat, String studentanvändare)
     {
+        LOG.info("sendLadokResultat called");
         // 1) hämta student från StudentITS
         Studentits_Student student = api
-                .path("studentits")
-                .path("students")
-                .path(studentanvändare)
+                .path("studentIts")
+                .path("student")
+                .queryParam("Användare", studentanvändare)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Studentits_Student.class);
 
@@ -69,18 +70,21 @@ public class NetworkService {
         {
             return false;
         }
+        LOG.info("Got student with pnr " + student.getPersonnummer());
 
         resultat.setPersonnummer(student.getPersonnummer());
 
         // 2) skicka resultatet vidare till Ladok
         Response response = api
                 .path("ladok")
-                .path("regresultat")
+                .path("regResultat")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(resultat, MediaType.APPLICATION_JSON_TYPE));
 
         boolean ok = response.getStatus() >= 200 && response.getStatus() < 300;
         response.close();
+
+        LOG.info("sendLadokResultat finished, code was " + response.getStatus());
         return ok;
     }
 
@@ -114,7 +118,7 @@ public class NetworkService {
     // --- EXEMPEL: Hämta en students betyg (GET) ---
     public Canvas_Betyg getCanvasGrade(String användare, int uppgift_nr)
     {
-
+        LOG.info("Called getCanvasGrade called with params " + användare + " and " + uppgift_nr);
         return api.path("canvas")
                 .path("betyg")
                 .path(användare)
@@ -146,7 +150,7 @@ public class NetworkService {
     // --- EXEMPEL: Hämta kursuppgifter (GET) ---
     public List<Canvas_Kursuppgift> getAllKursuppgift(String kurskod)
     {
-        LOG.info("getAllKursuppgift() called");
+        LOG.info("getAllKursuppgift() called with parameter " + kurskod);
 
         return api.path("canvas")
                 .path("kursuppgifter")
