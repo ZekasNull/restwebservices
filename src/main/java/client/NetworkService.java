@@ -29,9 +29,14 @@ public class NetworkService {
     private String baseUrl;
 
     //region constructors
+
+    /**
+     * Parameterlös konstruktor - antar given basURL
+     * Konfigurera i din GlassFish deployment
+     */
     public NetworkService()
     {
-        this("http://localhost:8080/restwebservices"); // ändra om ni har annan bas-url
+        this("http://localhost:8080/restwebservices/api"); // ändra om ni har annan bas-url
     }
 
     public NetworkService(String baseUrl)
@@ -122,6 +127,7 @@ public class NetworkService {
     // --- EXEMPEL: Hämta kurskoder (GET) ---
     public List<String> getAllKurskod()
     {
+        LOG.info("getAllKurskod() called");
         try
         {
             return
