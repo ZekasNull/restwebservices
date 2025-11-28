@@ -148,6 +148,7 @@ public class DatabaseConnector {
 
     /**
      * Hämtar alla kurskoder från epok
+     * @return Alla kurskoder som en arraylist av strings
      */
     public ArrayList<String> getKurskodFromEpok()
     {
@@ -178,6 +179,8 @@ public class DatabaseConnector {
 
     /**
      * Hämtar alla kursuppgifter från Canvas
+     * @param kurskod Kursen vars uppgifter söks
+     * @return En ArrayList av Canvas_Kursuppgifter
      */
     public ArrayList<Canvas_Kursuppgift> getKursuppgifterFromCanvas(String kurskod)
     {
